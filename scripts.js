@@ -33,7 +33,13 @@ function handleRangeUpdate() {
 function handleProgress() {
   const progress = (video.currentTime / video.duration) * 100;
   progressBar.style.flexBasis = `${progress}%`;
-  console.log("PROGRESS ==> ", progressBar.style);
+  //console.log("PROGRESS ==> ", progressBar.style);
+}
+
+function scrubProgress(e) {
+  console.log(e);
+  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+  video.currentTime = scrubTime;
 }
 
 video.addEventListener('click', togglePlay);
@@ -56,4 +62,9 @@ ranges.forEach((range) => {
   range.addEventListener('mousemove', handleRangeUpdate);
 })
 
-//progressBar.addEventListener("mouseover", handleProgress);
+progress.addEventListener("click", scrubProgress);
+
+let mousedown = false;
+progress.addEventListener("mousemove", (e) => mousedown && scrubProgress(e) );
+progress.addEventListener("mousedown", () => mousedown = true);
+progress.addEventListener("mouseup", () => mousedown = false);
