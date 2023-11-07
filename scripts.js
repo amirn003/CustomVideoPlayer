@@ -30,9 +30,17 @@ function handleRangeUpdate() {
   console.log(this.value);
 }
 
+function handleProgress() {
+  const progress = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${progress}%`;
+  console.log("PROGRESS ==> ", progressBar.style);
+}
+
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
+video.addEventListener('timeupdate', handleProgress);
+
 
 toggle.addEventListener('click', togglePlay);
 
@@ -47,3 +55,5 @@ ranges.forEach((range) => {
 ranges.forEach((range) => {
   range.addEventListener('mousemove', handleRangeUpdate);
 })
+
+//progressBar.addEventListener("mouseover", handleProgress);
